@@ -48,7 +48,6 @@ const images = [
     },
 ];
 
-
 // inizializzo variabile per rappresentare il contenuto del carosello
 let itemContent = '';
 let itemThumbnail = '';
@@ -166,3 +165,32 @@ function stopAutoplay() {
 
 //avvia l'autoplay quando la pagina è caricata
 window.addEventListener('load', startAutoplay);
+
+//variabile per memorizzare l'intervallo dell'autoplay
+let autoplayInterval;
+//variabile per tenere traccia dello stato dell'autoplay
+let isAutoplayOn = false;
+
+//funzione per gestire l'avvio e l'arresto alternati dell'autoplay
+function toggleAutoplay() {
+
+    if (isAutoplayOn) {
+        //se l'autoplay è attivo, si ferma
+        clearInterval(autoplayInterval);
+        
+        toggleButton.innerHTML = 'Start <i class="fa fa-play"></i>';
+    } else {
+        //se l'autoplay è disattivato, parte
+        autoplayInterval = setInterval(nextImage, 3000);
+        //cambio frase dentro bottone
+        toggleButton.innerHTML = 'Stop <i class="fa fa-stop"></i>';
+    }
+    //inverto lo stato dell'autoplay
+    isAutoplayOn = !isAutoplayOn;
+}
+
+//associo la funzione al pulsante di toggle
+const toggleButton = document.querySelector('#toggleButton');
+
+//aggiungo un event listener al click sul bottone
+toggleButton.addEventListener('click', toggleAutoplay);
